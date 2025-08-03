@@ -46,7 +46,7 @@ CREATE TABLE Producto (
     precioUnitario DECIMAL(10, 2) NOT NULL,
     stock INT DEFAULT 0,
     idCategoria INT,
-    tipoProducto ENUM('ProductoFisico', 'ProductoDigital') NOT NULL,
+    TYPE ENUM('ProductoFisico', 'ProductoDigital') NOT NULL,
     FOREIGN KEY (idCategoria) REFERENCES Categoria(id)
 );
 

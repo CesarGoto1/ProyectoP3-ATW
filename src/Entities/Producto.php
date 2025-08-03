@@ -1,0 +1,79 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Entities;
+abstract class Producto{
+    protected int $id;
+    protected string $nombre;
+    protected string $descripcion;
+    protected float $precioUnitario;
+    protected int $stock;
+    protected Categoria $categoria;
+
+    public function __construct(int $id, 
+                                string $nombre, 
+                                string $descripcion, 
+                                float $precioUnitario, 
+                                int $stock, 
+                                Categoria $categoria)
+    {
+        $this->id = $id;
+        $this->nombre = $nombre;
+        $this->descripcion = $descripcion;
+        $this->precioUnitario = $precioUnitario;
+        $this->stock = $stock;
+        $this->categoria = $categoria;
+    }
+
+    // Getters
+    public function getId(): int
+    {
+        return $this->id;
+    }
+    public function getNombre(): string
+    {
+        return $this->nombre;
+    }
+    public function getDescripcion(): string
+    {
+        return $this->descripcion;
+    }
+    public function getPrecioUnitario(): float
+    {
+        return $this->precioUnitario;
+    }
+    public function getStock(): int
+    {
+        return $this->stock;
+    }
+    public function getCategoria(): Categoria
+    {
+        return $this->categoria;
+    }
+    // Setters
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+    public function setNombre(string $nombre): void
+    {
+        $this->nombre = $nombre;
+    }
+    public function setDescripcion(string $descripcion): void
+    {
+        $this->descripcion = $descripcion;
+    }
+    public function setPrecioUnitario(float $precioUnitario): void
+    {
+        $this->precioUnitario = $precioUnitario;
+    }
+    public function setStock(int $stock): void
+    {
+        $this->stock = $stock;
+    }
+    public function setCategoria(Categoria $categoria): void
+    {
+        $this->categoria = $categoria;
+    }
+    
+}
