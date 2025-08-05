@@ -20,7 +20,7 @@ class CategoriaController
         if ($method === 'GET'){
             if(isset($_GET['id'])){
                 $categoria = $this->categoriaRepo->findById((int)$_GET['id']);
-                echo json_encode($categoria ? $categoria->toArray() : null);
+                echo json_encode($categoria ? $this->categoriaToArray($categoria) : null);
             }else{
                 $list = array_map([$this,'categoriaToArray'], $this->categoriaRepo->findAll());
                 echo json_encode($list);

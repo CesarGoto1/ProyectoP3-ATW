@@ -25,7 +25,7 @@ class PfisicoController
         if ($method === 'GET'){
             if(isset($_GET['id'])){
                 $pf = $this->pFrepository->findById((int)$_GET['id']);
-                echo json_encode($pf ? $pf->toArray() : null);
+                echo json_encode($pf ? $this->productoFisicoToArray($pf) : null);
             }else{
                 $list = array_map([$this,'productoFisicoToArray'], $this->pFrepository->findAll());
                 echo json_encode($list);
