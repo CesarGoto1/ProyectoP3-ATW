@@ -44,13 +44,39 @@
             if($method==='POST'){
                 $personaNatural = new PersonaNatural(
                     null,
-                    $payload['telefono'],
                     $payload['direccion'],
+                    $payload['email'],
+                    $payload['telefono'],
                     $payload['nombres'],
                     $payload['apellidos'],
                     $payload['cedula']
                 );
                 echo json_encode(['success'=>$this->personaNaturalRepo->create($personaNatural)]);
+                return;
+            }
+
+            if($method==='PUT'){
+                $id = (int)($payload['id']??0);
+
+                $existing = $this->personaNaturalRepo->findById($id);
+                if(!$existing){
+                    http_response_code(404);
+                    echo json_encode(['error'=>'Persona Natural not found']);
+                    return;
+                }
+                if(isset($payload['direccion'])) $existing->setDireccion($payload['direccion']);
+                if(isset($payload['email'])) $existing->setEmail($payload['email']);
+                if(isset($payload['telefono'])) $existing->setTelefono($payload['telefono']);
+                if(isset($payload['nombres'])) $existing->setNombres($payload['nombres']);
+                if(isset($payload['apellidos'])) $existing->setApellidos($payload['apellidos']);
+                if(isset($payload['cedula'])) $existing->setCedula($payload['cedula']);
+
+                echo json_encode(['success'=>$this->personaNaturalRepo->update($existing)]);
+                return;
+            }
+
+            if($method === 'DELETE'){
+                echo json_encode(['success' => $this->personaNaturalRepo->delete((int)($payload['id']??0))]);
                 return;
             }
         }

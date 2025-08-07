@@ -10,7 +10,7 @@ class ProductoFisico extends Producto
     private float $profundidad;
 
     public function __construct(
-                                int $id, 
+                                ?int $id, 
                                 string $nombre, 
                                 string $descripcion, 
                                 float $precioUnitario, 

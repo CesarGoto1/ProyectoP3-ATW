@@ -1,5 +1,5 @@
 <?php
 require __DIR__ . '/../../vendor/autoload.php';
-use App\Controllers\PfisicoController;
+use App\Controllers\ProductoFisicoController;
 
-(new PfisicoController())->handle();
+(new ProductoFisicoController())->handle();

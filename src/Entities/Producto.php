@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace App\Entities;
 abstract class Producto{
-    protected int $id;
+    protected ?int $id;
     protected string $nombre;
     protected string $descripcion;
     protected float $precioUnitario;
     protected int $stock;
     protected Categoria $categoria;
 
-    public function __construct(int $id, 
+    public function __construct(?int $id, 
                                 string $nombre, 
                                 string $descripcion, 
                                 float $precioUnitario, 
@@ -26,7 +26,7 @@ abstract class Producto{
     }
 
     // Getters
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -51,7 +51,7 @@ abstract class Producto{
         return $this->categoria;
     }
     // Setters
-    public function setId(int $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }

@@ -10,7 +10,7 @@ class Categoria
     private string $estado;
     private ?int $idPadre = null;
 
-    public function __construct(int $id, 
+    public function __construct(?int $id, 
                                 string $nombre, 
                                 ?string $descripcion, 
                                 string $estado, 

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Repositories;
 
-use App\Config\database;
+use App\Config\Database;
 use App\Entities\Categoria;
 use App\Entities\ProductoFisico;
 use App\Interfaces\RepositoryInterface;
@@ -14,7 +14,7 @@ class ProductoFisicoRepository implements RepositoryInterface
     private CategoriaRepository $categoriaRepository;
     public function __construct()
     {
-        $this->db = database::getConnection();
+        $this->db = Database::getConnection();
         $this->categoriaRepository = new CategoriaRepository();
     }
     public function findAll(): array

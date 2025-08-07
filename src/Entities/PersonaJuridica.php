@@ -10,9 +10,9 @@
 
         public function __construct(
             ?int $id, 
+            string $direccion,
             string $email, 
             string $telefono, 
-            string $direccion,
             string $razonSocial,
             string $ruc,
             string $representanteLegal

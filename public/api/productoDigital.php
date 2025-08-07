@@ -1,5 +1,5 @@
 <?php
 require __DIR__ . '/../../vendor/autoload.php';
-use App\Controllers\PdigitalController;
+use App\Controllers\ProductoDigitalController;
 
-(new PdigitalController())->handle();
+(new ProductoDigitalController())->handle();

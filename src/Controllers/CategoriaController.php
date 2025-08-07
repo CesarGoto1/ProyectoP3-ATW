@@ -25,25 +25,44 @@ class CategoriaController
                 $list = array_map([$this,'categoriaToArray'], $this->categoriaRepo->findAll());
                 echo json_encode($list);
             }
+            return;
         }
-        return;
-        $playload = json_decode(file_get_contents('php://input'), true);
+
+        $payload = json_decode(file_get_contents('php://input'), true);
         if ($method === 'POST') {
-            $categoria = $this->categoriaRepo->findById((int)$playload['id']??0);
-            if (!$categoria) {
-                http_response_code(400);
-                echo json_encode(['error' => 'categoria no válida']);
-                return;
-            }
+
             $categoria = new Categoria(
-                0,
-                $playload['nombre'],
-                $playload['descripcion'],
-                $playload['estado'] ?? 'activo',
-                $playload['idPadre'] ?? null
+                null,
+                $payload['nombre'],
+                $payload['descripcion'],
+                $payload['estado'] ?? 'activo',
+                $payload['idPadre'] ?? null
             );
         echo json_encode(['success'=>$this->categoriaRepo->create($categoria)]);
-        }   
+        return;
+        }
+        if($method==='PUT'){
+                $id = (int)($payload['id']??0);
+
+                $existing = $this->categoriaRepo->findById($id);
+                if(!$existing){
+                    http_response_code(404);
+                    echo json_encode(['error'=>'Categoria not found']);
+                    return;
+                }
+                if(isset($payload['nombre'])) $existing->setNombre($payload['nombre']);
+                if(isset($payload['descripcion'])) $existing->setDescripcion($payload['descripcion']);
+                if(isset($payload['estado'])) $existing->setEstado($payload['estado']);
+                if(isset($payload['idPadre'])) $existing->setIdPadre($payload['idPadre']);
+                
+
+                echo json_encode(['success'=>$this->categoriaRepo->update($existing)]);
+                return;
+            }
+
+            if($method==='DELETE'){
+                echo json_encode(['success'=>$this->categoriaRepo->delete((int)($payload['id']??0))]);
+            }
     }
 
     public function categoriaToArray(Categoria $categoria): array

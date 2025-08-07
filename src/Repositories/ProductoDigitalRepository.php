@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Repositories;
 
-use App\Config\database;
+use App\Config\Database;
 use App\Entities\Categoria;
 use App\Entities\ProductoDigital;
 use App\Interfaces\RepositoryInterface;
@@ -15,7 +15,7 @@ class ProductoDigitalRepository implements RepositoryInterface
 
     public function __construct()
     {
-        $this->db = database::getConnection();
+        $this->db = Database::getConnection();
         $this->categoriaRepository = new CategoriaRepository();
     }
 
@@ -55,24 +55,31 @@ class ProductoDigitalRepository implements RepositoryInterface
         if (!$entity instanceof ProductoDigital) {
             throw new \InvalidArgumentException('ProductoDigital expected');
         }
-        $stmt = $this->db->prepare("CALL sp_create_pDigital(:nombre, :descripcion, :precioUnitario, :stock, 
-        :idCategoria, :urlDescarga, :licencia)");
-        return $stmt->execute([
-            'nombre' => $entity->getNombre(),
-            'descripcion' => $entity->getDescripcion(),
-            'precioUnitario' => $entity->getPrecioUnitario(),
-            'stock' => $entity->getStock(),
-            'idCategoria' => $entity->getCategoria()->getId(),
-            'urlDescarga' => $entity->getUrlDescarga(),
-            'licencia' => $entity->getLicencia()
+        $stmt = $this->db->prepare("CALL sp_create_pDigital(
+        :nombre, 
+        :descripcion, 
+        :precioUnitario, 
+        :stock, 
+        :idCategoria, 
+        :urlDescarga, 
+        :licencia)");
+
+        $ok = $stmt->execute([
+            ':nombre'           => $entity->getNombre(),
+            ':descripcion'      => $entity->getDescripcion(),
+            ':precioUnitario'   => $entity->getPrecioUnitario(),
+            ':stock'            => $entity->getStock(),
+            ':idCategoria'      => $entity->getCategoria()->getId(),
+            ':urlDescarga'      => $entity->getUrlDescarga(),
+            ':licencia'         => $entity->getLicencia()
         ]);
         if ($ok){
             $stmt->fetch();
         }
         $stmt->closeCursor();
-        return true;
-
+        return $ok;
     }
+
     public function findById(int $id): ?object{
         $stmt = $this->db->prepare("CALL sp_find_pDigital(:id)");
         $stmt->execute(['id' => $id]);
@@ -82,19 +89,26 @@ class ProductoDigitalRepository implements RepositoryInterface
 
     public function update(object $entity): bool{
         if (!$entity instanceof ProductoDigital) {
-            throw new \InvalidArgumentException('ProductoDigital expected');
+            throw new \InvalidArgumentException('Producto Digital expected');
         }
-        $stmt = $this->db->prepare("CALL sp_update_pDigital(:id, :nombre, :descripcion, :precioUnitario, :stock, 
-        :idCategoria, :urlDescarga, :licencia)");
-        return $stmt->execute([
-            'id' => $entity->getId(),
-            'nombre' => $entity->getNombre(),
-            'descripcion' => $entity->getDescripcion(),
-            'precioUnitario' => $entity->getPrecioUnitario(),
-            'stock' => $entity->getStock(),
-            'idCategoria' => $entity->getCategoria()->getId(),
-            'urlDescarga' => $entity->getUrlDescarga(),
-            'licencia' => $entity->getLicencia()
+        $stmt = $this->db->prepare("CALL sp_update_pDigital(
+        :id, 
+        :nombre, 
+        :descripcion, 
+        :precioUnitario, 
+        :stock, 
+        :idCategoria, 
+        :urlDescarga,
+        :licencia)");
+        $ok =  $stmt->execute([
+            ':id'               => $entity->getId(),
+            ':nombre'           => $entity->getNombre(),
+            ':descripcion'      => $entity->getDescripcion(),
+            ':precioUnitario'   => $entity->getPrecioUnitario(),
+            ':stock'            => $entity->getStock(),
+            ':idCategoria'      => $entity->getCategoria()->getId(),
+            ':urlDescarga'      => $entity->getUrlDescarga(),
+            ':licencia'         => $entity->getLicencia()
         ]);
         if ($ok){
             $stmt->fetch();

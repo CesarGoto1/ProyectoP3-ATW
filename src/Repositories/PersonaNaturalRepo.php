@@ -90,7 +90,13 @@
 
         //DELETE PERSONA NATURAL
         public function delete(int $id):bool{
-
+            $stmt = $this->db->prepare("CALL sp_delete_persona_natural(:id);");
+            $ok = $stmt->execute([':id' => $id]);
+            if($ok){
+                $stmt -> fetch();
+            }
+            $stmt->closeCursor();
+            return $ok;
         }
 
         //FIND ALL PERSONA NATURAL

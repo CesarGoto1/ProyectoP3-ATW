@@ -5,7 +5,7 @@ namespace App\Repositories;
 
 use App\Entities\Categoria;
 use App\Interfaces\RepositoryInterface;
-use App\Config\database;
+use App\Config\Database;
 use PDO;
 
 class CategoriaRepository implements RepositoryInterface
@@ -14,7 +14,7 @@ class CategoriaRepository implements RepositoryInterface
 
     public function __construct()
     {
-        $this->db = database::getConnection();
+        $this->db = Database::getConnection();
     }
     public function findAll(): array
     {
@@ -48,10 +48,10 @@ class CategoriaRepository implements RepositoryInterface
         $stmt = $this->db->prepare($sql);
 
         return $stmt->execute([
-            'nombre' => $entity->getNombre(),
-            'descripcion' => $entity->getDescripcion(),
-            'estado' => $entity->getEstado(),
-            'idPadre' => $entity->getIdPadre()
+            ':nombre' => $entity->getNombre(),
+            ':descripcion' => $entity->getDescripcion(),
+            ':estado' => $entity->getEstado(),
+            ':idPadre' => $entity->getIdPadre()
         ]);
     }
 
@@ -73,11 +73,11 @@ class CategoriaRepository implements RepositoryInterface
         $stmt = $this->db->prepare($sql);
 
         return $stmt->execute([
-            'nombre' => $entity->getNombre(),
-            'descripcion' => $entity->getDescripcion(),
-            'estado' => $entity->getEstado(),
-            'idPadre' => $entity->getIdPadre(),
-            'id' => $entity->getId()
+            ':nombre' => $entity->getNombre(),
+            ':descripcion' => $entity->getDescripcion(),
+            ':estado' => $entity->getEstado(),
+            ':idPadre' => $entity->getIdPadre(),
+            ':id' => $entity->getId()
         ]);
     }
     public function delete(int $id): bool

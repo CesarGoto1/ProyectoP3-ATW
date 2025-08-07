@@ -9,9 +9,10 @@
 
         public function __construct(?int $id, string $email, string $telefono, string $direccion){
             $this->id = $id;
+            $this->direccion = $direccion;
             $this->email = $email;
             $this->telefono = $telefono;
-            $this->direccion = $direccion;
+            
         }
 
         public function getId():?int{return $this->id;}

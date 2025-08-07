@@ -7,7 +7,7 @@ class ProductoDigital extends Producto
     private string $licencia;
 
     public function __construct(
-                                int $id, 
+                                ?int $id, 
                                 string $nombre, 
                                 string $descripcion, 
                                 float $precioUnitario, 
