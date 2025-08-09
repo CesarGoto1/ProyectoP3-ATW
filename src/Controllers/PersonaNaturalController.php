@@ -2,16 +2,16 @@
     declare(strict_types=1);
     namespace App\Controllers;
 
-    use App\Repositories\PersonaNaturalRepo;
+    use App\Repositories\PersonaNaturalRepository;
     use App\Entities\Cliente;
     use App\Entities\PersonaNatural;
     
     class PersonaNaturalController
     {
-        private PersonaNaturalRepo $personaNaturalRepo;
+        private PersonaNaturalRepository $personaNaturalRepository;
 
         public function __construct(){
-            $this->personaNaturalRepo = new PersonaNaturalRepo();
+            $this->personaNaturalRepository = new PersonaNaturalRepository();
         }
 
         public function personaNaturalToArray(PersonaNatural $personNat): array{
@@ -31,10 +31,10 @@
             $method = $_SERVER['REQUEST_METHOD'];
             if($method==='GET'){
                 if(isset($_GET['id'])){
-                    $personaNatural = $this->personaNaturalRepo->findById((int)$_GET['id']);
+                    $personaNatural = $this->personaNaturalRepository->findById((int)$_GET['id']);
                     echo json_encode($personaNatural?$this->personaNaturalToArray($personaNatural):null);
                 }else{
-                    $list = array_map([$this, 'personaNaturalToArray'], $this->personaNaturalRepo->findAll());
+                    $list = array_map([$this, 'personaNaturalToArray'], $this->personaNaturalRepository->findAll());
                     echo json_encode($list);
                 }
                 return;
@@ -51,14 +51,14 @@
                     $payload['apellidos'],
                     $payload['cedula']
                 );
-                echo json_encode(['success'=>$this->personaNaturalRepo->create($personaNatural)]);
+                echo json_encode(['success'=>$this->personaNaturalRepository->create($personaNatural)]);
                 return;
             }
 
             if($method==='PUT'){
                 $id = (int)($payload['id']??0);
 
-                $existing = $this->personaNaturalRepo->findById($id);
+                $existing = $this->personaNaturalRepository->findById($id);
                 if(!$existing){
                     http_response_code(404);
                     echo json_encode(['error'=>'Persona Natural not found']);
@@ -71,12 +71,12 @@
                 if(isset($payload['apellidos'])) $existing->setApellidos($payload['apellidos']);
                 if(isset($payload['cedula'])) $existing->setCedula($payload['cedula']);
 
-                echo json_encode(['success'=>$this->personaNaturalRepo->update($existing)]);
+                echo json_encode(['success'=>$this->personaNaturalRepository->update($existing)]);
                 return;
             }
 
             if($method === 'DELETE'){
-                echo json_encode(['success' => $this->personaNaturalRepo->delete((int)($payload['id']??0))]);
+                echo json_encode(['success' => $this->personaNaturalRepository->delete((int)($payload['id']??0))]);
                 return;
             }
         }

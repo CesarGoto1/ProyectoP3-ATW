@@ -90,29 +90,31 @@ class ProductoDigitalController
     {
         $categoria = $producto->getCategoria();
         $nombreCategoriaPadre = null;
-        
-        
+        $subCategoria = null;
+
         if ($categoria->getIdPadre() !== null) {
             $categoriaPadreObj = $this->categoriaRepository->findById($categoria->getIdPadre());
             if ($categoriaPadreObj) {
                 $nombreCategoriaPadre = $categoriaPadreObj->getNombre();
+                $subCategoria = $categoria->getNombre();
             }
+        } else {
+            $nombreCategoriaPadre = $categoria->getNombre();
+            $subCategoria = null;
         }
-        
+
         return [
             'id' => $producto->getId(),
             'nombre' => $producto->getNombre(),
             'descripcion' => $producto->getDescripcion(),
             'precioUnitario' => $producto->getPrecioUnitario(),
             'stock' => $producto->getStock(),
-            'informacionDigital' => [
-                'urlDescarga' => $producto->getUrlDescarga(),
-                'licencia' => $producto->getLicencia()
-            ],
+            'urlDescarga' => $producto->getUrlDescarga(),
+            'licencia' => $producto->getLicencia(),
             'categoria' => [
                 'id' => $categoria->getId(),
                 'Categoria' => $nombreCategoriaPadre,
-                'Sub Categoria' => $categoria->getNombre(),
+                'SubCategoria' => $subCategoria,
                 'descripcion' => $categoria->getDescripcion(),
                 'estado' => $categoria->getEstado(),
                 'idPadre' => $categoria->getIdPadre()

@@ -6,19 +6,19 @@ use App\Entities\Venta;
 use App\Entities\PersonaNatural;
 use App\Entities\PersonaJuridica;
 use App\Repositories\VentaRepository;
-use App\Repositories\PersonaNaturalRepo;
-use App\Repositories\PersonaJuridicaRepo;
+use App\Repositories\PersonaNaturalRepository;
+use App\Repositories\PersonaJuridicaRepository;
 use DateTime;
 
 class VentaController
 {
     private VentaRepository $ventaRepository;
-    private PersonaJuridicaRepo $personaJuridicaRepository;
-    private PersonaNaturalRepo $personaNaturalRepository;
+    private PersonaJuridicaRepository $personaJuridicaRepository;
+    private PersonaNaturalRepository $personaNaturalRepository;
     public function __construct(){
         $this->ventaRepository = new VentaRepository();
-        $this->personaJuridicaRepository = new PersonaJuridicaRepo();
-        $this->personaNaturalRepository = new PersonaNaturalRepo();
+        $this->personaJuridicaRepository = new PersonaJuridicaRepository();
+        $this->personaNaturalRepository = new PersonaNaturalRepository();
     }
 
     public function ventaToArray(Venta $venta):array{

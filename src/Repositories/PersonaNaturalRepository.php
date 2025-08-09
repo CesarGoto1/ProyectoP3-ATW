@@ -8,7 +8,7 @@
     use App\Interfaces\RepositoryInterface;
     use PDO;
 
-    class PersonaNaturalRepo implements RepositoryInterface
+    class PersonaNaturalRepository implements RepositoryInterface
     {
         private PDO $db;
         public function __construct(){

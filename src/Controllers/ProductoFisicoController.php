@@ -9,7 +9,7 @@ use App\Entities\Categoria;
 
 class ProductoFisicoController
 {
-    private ProductoFisicoRepository $productoFisicorepository;
+    private ProductoFisicoRepository $productoFisicoRepository;
     private CategoriaRepository $categoriaRepository;
 
     public function __construct()
@@ -109,16 +109,14 @@ class ProductoFisicoController
             'descripcion' => $producto->getDescripcion(),
             'precioUnitario' => $producto->getPrecioUnitario(),
             'stock' => $producto->getStock(),
-            'dimensiones' => [
-                'peso' => $producto->getPeso(),
-                'alto' => $producto->getAlto(),
-                'ancho' => $producto->getAncho(),
-                'profundidad' => $producto->getProfundidad()
-            ],
+            'peso' => $producto->getPeso(),
+            'alto' => $producto->getAlto(),
+            'ancho' => $producto->getAncho(),
+            'profundidad' => $producto->getProfundidad(),
             'categoria' => [
                 'id' => $categoria->getId(),
                 'Categoria' => $nombreCategoriaPadre,
-                'Sub Categoria' => $categoria->getNombre(),
+                'SubCategoria' => $categoria->getNombre(),
                 'descripcion' => $categoria->getDescripcion(),
                 'estado' => $categoria->getEstado(),
                 'idPadre' => $categoria->getIdPadre()
