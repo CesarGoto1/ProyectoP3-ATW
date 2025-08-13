@@ -6,6 +6,7 @@ Ext.onReady(()=>{
     const productoDigitalPanel = createProductoDigitalPanel();
     const ventaPanel = createVentaPanel();
     const detalleVentaPanel = createDetalleVentaPanel();
+    const facturaPanel = createFacturaPanel();
     const mainCard = Ext.create('Ext.panel.Panel',{
         region: 'center',
         layout: 'card',
@@ -15,7 +16,9 @@ Ext.onReady(()=>{
             productoFisicoPanel,
             productoDigitalPanel,
             ventaPanel,
-            detalleVentaPanel]
+            detalleVentaPanel,
+            facturaPanel
+        ]
     });
 
     Ext.create("Ext.container.Viewport",{
@@ -54,6 +57,10 @@ Ext.onReady(()=>{
                 text: 'Detalle Venta',
                 handler: () => mainCard.getLayout().setActiveItem(detalleVentaPanel)
             },
+            {
+                text: 'Factura',
+                handler: () => mainCard.getLayout().setActiveItem(facturaPanel)
+            }
             ]
         },
         mainCard],
