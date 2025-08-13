@@ -3,14 +3,20 @@
     namespace App\Controllers;
 
     use App\Repositories\DetalleVentaRepository;
+    use App\Repositories\ProductoFisicoRepository;
+    use App\Repositories\ProductoDigitalRepository;
     use App\Entities\DetalleVenta;
 
     class DetalleVentaController
     {
         private DetalleVentaRepository $detalleVentaRepository;
+        private ProductoFisicoRepository $productoFisicoRepository;
+        private ProductoDigitalRepository $productoDigitalRepository;
 
         public function __construct(){
             $this->detalleVentaRepository = new DetalleVentaRepository();
+            $this->productoFisicoRepository = new ProductoFisicoRepository();
+            $this->productoDigitalRepository = new ProductoDigitalRepository();
         }
 
         public function detalleVentaToArray(DetalleVenta $detalleVenta):array{
@@ -41,18 +47,28 @@
             $payload = json_decode(file_get_contents('php://input'),true);
 
             if($method === 'POST'){
-                if(!isset($payload['idVenta'], $payload['lineNumber'], $payload['idProducto'], 
-                        $payload['cantidad'], $payload['precioUnitario'])){
+                if(!isset($payload['idVenta'], $payload['lineNumber'], $payload['idProducto'], $payload['cantidad'])){
                     http_response_code(400);
                     echo json_encode(['error' => 'Faltan campos obligatorios']);
                     return;
                 }
+
+                $idProducto = (int)$payload['idProducto'];
+                // Buscar el producto en ambos repositorios
+                $producto = $this->productoFisicoRepository->findById($idProducto) ?? $this->productoDigitalRepository->findById($idProducto);
+                if(!$producto){
+                    http_response_code(404);
+                    echo json_encode(['error' => 'Producto no encontrado']);
+                    return;
+                }
+                $precioUnitario = $producto->getPrecioUnitario();
+
                 $detalleVenta = new DetalleVenta(
                     (int)$payload['idVenta'],
                     (int)$payload['lineNumber'],
-                    (int)$payload['idProducto'],
+                    $idProducto,
                     (int)$payload['cantidad'],
-                    (float)$payload['precioUnitario']
+                    $precioUnitario
                 );
                 
                 echo json_encode(['success' => $this->detalleVentaRepository->create($detalleVenta)]);
@@ -60,23 +76,33 @@
             }
 
             if($method === 'PUT'){
-                if(!isset($payload['idVenta'], $payload['lineNumber'])){
+                if(!isset($payload['idVenta'], $payload['lineNumber'], $payload['idProducto'], $payload['cantidad'])){
                     http_response_code(400);
-                    echo json_encode(['error' => 'idVenta y lineNumber son obligatorios']);
+                    echo json_encode(['error' => 'Faltan campos obligatorios']);
                     return;
                 }
+
+                $idProducto = (int)$payload['idProducto'];
+                $producto = $this->productoFisicoRepository->findById($idProducto) ?? $this->productoDigitalRepository->findById($idProducto);
+                if(!$producto){
+                    http_response_code(404);
+                    echo json_encode(['error' => 'Producto no encontrado']);
+                    return;
+                }
+                $precioUnitario = $producto->getPrecioUnitario();
 
                 $detalleVenta = new DetalleVenta(
                     (int)$payload['idVenta'],
                     (int)$payload['lineNumber'],
-                    (int)$payload['idProducto'],
+                    $idProducto,
                     (int)$payload['cantidad'],
-                    (float)$payload['precioUnitario']
+                    $precioUnitario
                 );
                 
                 echo json_encode(['success' => $this->detalleVentaRepository->update($detalleVenta)]);
                 return;
             }
+
             if($method === 'DELETE'){
 
                 if(!isset($payload['idVenta'], $payload['lineNumber'])){
