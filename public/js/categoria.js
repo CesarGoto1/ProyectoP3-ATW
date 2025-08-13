@@ -69,8 +69,7 @@ const createCategoriaPanel = () =>{
         tbar:[
             {text: 'Add'},
             {text: 'Update'},
-            {text: 'Delete'},
-            {text: 'Find by Id'}        
+            {text: 'Delete'}    
         ]
     });
     return grid;

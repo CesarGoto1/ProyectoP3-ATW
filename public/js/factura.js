@@ -89,10 +89,9 @@ const createFacturaPanel = () => {
             }
         ],
         tbar: [
-            {text: 'Agregar'},
-            {text: 'Actualizar'},
-            {text: 'Eliminar'},
-            {text: 'Buscar por Id'}
+            {text: 'Add'},
+            {text: 'Update'},
+            {text: 'Delete'}
         ]
     });
     return grid;
