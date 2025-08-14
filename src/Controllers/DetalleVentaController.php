@@ -47,14 +47,17 @@
             $payload = json_decode(file_get_contents('php://input'),true);
 
             if($method === 'POST'){
-                if(!isset($payload['idVenta'], $payload['lineNumber'], $payload['idProducto'], $payload['cantidad'])){
+                if(!isset($payload['idVenta'], $payload['idProducto'], $payload['cantidad'])){
                     http_response_code(400);
                     echo json_encode(['error' => 'Faltan campos obligatorios']);
                     return;
                 }
-
+                $idVenta = (int)$payload['idVenta'];
+                if (!isset($payload['lineNumber']) || !$payload['lineNumber']) {
+                    $ultimo = $this->detalleVentaRepository->findMaxLineNumberByVenta($idVenta);
+                    $payload['lineNumber'] = $ultimo + 1;
+                }
                 $idProducto = (int)$payload['idProducto'];
-                // Buscar el producto en ambos repositorios
                 $producto = $this->productoFisicoRepository->findById($idProducto) ?? $this->productoDigitalRepository->findById($idProducto);
                 if(!$producto){
                     http_response_code(404);
@@ -64,13 +67,12 @@
                 $precioUnitario = $producto->getPrecioUnitario();
 
                 $detalleVenta = new DetalleVenta(
-                    (int)$payload['idVenta'],
+                    $idVenta,
                     (int)$payload['lineNumber'],
                     $idProducto,
                     (int)$payload['cantidad'],
                     $precioUnitario
                 );
-                
                 echo json_encode(['success' => $this->detalleVentaRepository->create($detalleVenta)]);
                 return;
             }

@@ -19,7 +19,7 @@
             parent::__construct($id, $email, $telefono, $direccion);
             $this->nombres=$nombres;
             $this->apellidos=$apellidos;
-            $this->cedula=$cedula;
+            $this->setCedula($cedula);
         }
         private static function validarCedulaEcuatoriana($cedula) {
             if (!preg_match('/^\d{10}$/', $cedula)) return false;

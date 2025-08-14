@@ -73,10 +73,14 @@ class VentaController
                     echo json_encode(['error' => 'Cliente not found']);
                     return;
                 }
-
+                $fechaStr = $payload['fecha'];
+                if (is_numeric($fechaStr)) {
+                    $fechaStr = date('Y-m-d', strlen($fechaStr) === 10 ? intval($fechaStr) : intval($fechaStr)/1000);
+                }
+                $fecha = new DateTime($fechaStr);
                 $venta = new Venta(
                     null,
-                    new DateTime($payload['fecha']),
+                    $fecha,
                     $cliente,
                     (float)$payload['total'],
                     $payload['estado'] ?? 'borrador'
@@ -95,7 +99,13 @@ class VentaController
                 return;
             }
 
-            if(isset($payload['fecha'])) $existing->setFecha(new DateTime($payload['fecha']));
+            if(isset($payload['fecha'])) {
+                $fechaStr = $payload['fecha'];
+                if (is_numeric($fechaStr)) {
+                    $fechaStr = date('Y-m-d', strlen($fechaStr) === 10 ? intval($fechaStr) : intval($fechaStr)/1000);
+                }
+                $existing->setFecha(new DateTime($fechaStr));
+            }
             if(isset($payload['total'])) $existing->setTotal((float)$payload['total']);
             if(isset($payload['estado'])) $existing->setEstado($payload['estado']);
             

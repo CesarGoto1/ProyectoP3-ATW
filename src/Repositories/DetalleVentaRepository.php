@@ -95,7 +95,14 @@
             $stmt->closeCursor();
             return $ok;
         }
-        
+        public function findMaxLineNumberByVenta(int $idVenta): int
+        {
+            $stmt = $this->db->prepare("SELECT MAX(lineNumber) as maxLine FROM detalleventa WHERE idVenta = :idVenta");
+            $stmt->execute([':idVenta' => $idVenta]);
+            $row = $stmt->fetch();
+            $stmt->closeCursor();
+            return $row && $row['maxLine'] !== null ? (int)$row['maxLine'] : 0;
+        }
         public function delete(int $id):bool{
             throw new \BadMethodCallException(
                 'Use deleteByCompositeKey(idVenta, lineNumber) instead'

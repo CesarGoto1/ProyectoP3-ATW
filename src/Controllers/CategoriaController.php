@@ -53,7 +53,14 @@ class CategoriaController
                 if(isset($payload['nombre'])) $existing->setNombre($payload['nombre']);
                 if(isset($payload['descripcion'])) $existing->setDescripcion($payload['descripcion']);
                 if(isset($payload['estado'])) $existing->setEstado($payload['estado']);
-                if(isset($payload['idPadre'])) $existing->setIdPadre($payload['idPadre']);
+                if(array_key_exists('idPadre', $payload)) {
+        $idPadre = $payload['idPadre'];
+        if ($idPadre === "" || $idPadre === null) {
+            $existing->setIdPadre(null);
+        } else {
+            $existing->setIdPadre((int)$idPadre);
+        }
+    }
                 
 
                 echo json_encode(['success'=>$this->categoriaRepo->update($existing)]);
