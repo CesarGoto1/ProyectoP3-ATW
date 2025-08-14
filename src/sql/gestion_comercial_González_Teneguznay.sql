@@ -56,7 +56,7 @@ CREATE TABLE `cliente` (
   `direccion` varchar(255) DEFAULT NULL,
   `tipoCliente` enum('PersonaNatural','PersonaJuridica') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `detalleventa` (
 --
 
 /*!40000 ALTER TABLE `detalleventa` DISABLE KEYS */;
-INSERT INTO `detalleventa` (`idVenta`, `lineNumber`, `idProducto`, `cantidad`, `precioUnitario`) VALUES (1,1,1,1,750.00),(1,2,6,1,89.99),(1,3,5,1,9.99),(2,1,2,1,999.00),(2,2,4,1,850.00),(3,1,3,1,99.99),(4,1,1,1,750.00),(4,2,5,1,239.88),(4,3,3,1,99.99),(7,1,6,5,89.99),(7,2,2,1,269.99),(7,3,6,5,89.99),(7,4,4,2,850.00);
+INSERT INTO `detalleventa` (`idVenta`, `lineNumber`, `idProducto`, `cantidad`, `precioUnitario`) VALUES (1,1,1,1,750.00),(1,2,6,1,89.99),(1,3,5,1,9.99),(2,1,2,1,999.00),(2,2,4,1,850.00),(3,1,3,1,99.99),(4,1,1,1,750.00),(4,2,5,1,239.88),(4,3,3,1,99.99),(5,1,1,1,750.00);
 /*!40000 ALTER TABLE `detalleventa` ENABLE KEYS */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -182,7 +182,7 @@ CREATE TABLE `factura` (
   PRIMARY KEY (`id`),
   KEY `idVenta` (`idVenta`),
   CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idVenta`) REFERENCES `venta` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +190,7 @@ CREATE TABLE `factura` (
 --
 
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-INSERT INTO `factura` VALUES (1,1,'FAC-001-001-000001','15072024011712345678901234567890123456789012345678','2024-07-15','emitida'),(2,2,'FAC-001-001-000002','16072024011712345678901234567890123456789012345678','2024-07-16','emitida'),(3,4,'FAC-001-001-000003','18072024011712345678901234567890123456789012345678','2024-07-18','emitida'),(5,7,'FAC-057-057-000057','57372024011712345678901234567890123456789012345678','2025-09-12','emitida');
+INSERT INTO `factura` VALUES (1,1,'FAC-001-001-000001','15072024011712345678901234567890123456789012345678','2024-07-15','emitida'),(2,2,'FAC-001-001-000002','16072024011712345678901234567890123456789012345678','2024-07-16','emitida'),(3,4,'FAC-001-001-000003','18072024011712345678901234567890123456789012345678','2024-07-18','emitida'),(4,5,'FAC-001-001-000004','19072024011712345678901234567890123456789012345678','2024-07-19','emitida');
 /*!40000 ALTER TABLE `factura` ENABLE KEYS */;
 
 --
@@ -204,7 +204,7 @@ CREATE TABLE `permiso` (
   `id` int NOT NULL AUTO_INCREMENT,
   `codigo` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +212,7 @@ CREATE TABLE `permiso` (
 --
 
 /*!40000 ALTER TABLE `permiso` DISABLE KEYS */;
-INSERT INTO `permiso` VALUES (1,'CREATE_SALE'),(2,'EDIT_SALE'),(3,'DELETE_SALE'),(4,'VIEW_REPORTS'),(5,'MANAGE_INVENTORY'),(6,'MANAGE_USERS'),(7,'MANAGE_CATEGORIES'),(8,'ISSUE_INVOICE'),(9,'CANCEL_INVOICE'),(10,'WITH_LIMITED_PRIVILEGES');
+INSERT INTO `permiso` VALUES (1,'CREATE_SALE'),(2,'EDIT_SALE'),(3,'DELETE_SALE'),(4,'VIEW_REPORTS'),(5,'MANAGE_INVENTORY'),(6,'MANAGE_USERS'),(7,'MANAGE_CATEGORIES'),(8,'ISSUE_INVOICE'),(9,'CANCEL_INVOICE'),(10,'VIEW_SALES');
 /*!40000 ALTER TABLE `permiso` ENABLE KEYS */;
 
 --
@@ -262,7 +262,7 @@ CREATE TABLE `personanatural` (
 --
 
 /*!40000 ALTER TABLE `personanatural` DISABLE KEYS */;
-INSERT INTO `personanatural` VALUES (1,'Juan Carlos','Pérez González','1712345678'),(2,'María Fernanda','García López','0912345678'),(5,'Ana Sofía','López Martínez','0112345678');
+INSERT INTO `personanatural` VALUES (1,'Juan Carlos','Pérez González','1753391364'),(2,'María Fernanda','García López','0200357796'),(5,'Ana Sofía','López Martínez','1000237790');
 /*!40000 ALTER TABLE `personanatural` ENABLE KEYS */;
 
 --
@@ -283,7 +283,7 @@ CREATE TABLE `producto` (
   PRIMARY KEY (`id`),
   KEY `idCategoria` (`idCategoria`),
   CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -355,7 +355,7 @@ CREATE TABLE `rol` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -405,7 +405,7 @@ CREATE TABLE `usuario` (
   `estado` enum('activo','inactivo') DEFAULT 'activo',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,7 +432,7 @@ CREATE TABLE `venta` (
   PRIMARY KEY (`id`),
   KEY `idCliente` (`idCliente`),
   CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,7 +440,7 @@ CREATE TABLE `venta` (
 --
 
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
-INSERT INTO `venta` VALUES (1,'2024-07-15',1,849.98,'emitida'),(2,'2024-07-16',3,1599.98,'emitida'),(3,'2024-07-17',2,99.99,'borrador'),(4,'2024-07-18',4,1089.98,'emitida'),(7,'2025-08-07',1,2869.89,'emitida');
+INSERT INTO `venta` VALUES (1,'2024-07-15',1,849.98,'emitida'),(2,'2024-07-16',3,1849.00,'emitida'),(3,'2024-07-17',2,99.99,'borrador'),(4,'2024-07-18',4,1089.87,'emitida'),(5,'2024-07-19',5,750.00,'emitida');
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 
 --
@@ -2183,4 +2183,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-13 10:10:38
+-- Dump completed on 2025-08-14 16:12:00
